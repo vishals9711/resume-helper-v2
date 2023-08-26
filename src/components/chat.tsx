@@ -1,5 +1,4 @@
-'use client'
-
+"use client"
 import { useChat, type Message } from 'ai/react'
 
 import { cn } from '@/lib/utils'
@@ -16,12 +15,11 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { toast } from 'react-hot-toast'
 
-const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
   id?: string
@@ -32,22 +30,28 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
     'ai-token',
     null
   )
-  const [previewTokenDialog, setPreviewTokenDialog] = useState(IS_PREVIEW)
-  const [previewTokenInput, setPreviewTokenInput] = useState(previewToken ?? '')
+  const [previewTokenDialog, setPreviewTokenDialog] = useState(typeof previewToken === null)
+  const [previewTokenInput, setPreviewTokenInput] = useState(previewToken ?? '');
+
+
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
       initialMessages,
       id,
       body: {
         id,
-        previewToken
+        previewToken,
+        isFirst: !initialMessages
       },
       onResponse(response) {
         if (response.status === 401) {
           toast.error(response.statusText)
         }
+        console.log(response)
       }
     })
+  
+  
   return (
     <>
       <div className={cn('pb-[200px] pt-4 md:pt-10', className)}>

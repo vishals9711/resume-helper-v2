@@ -1,36 +1,28 @@
-"use client"
-import * as React from 'react'
 import Link from 'next/link'
+import * as React from 'react'
 
-import { cn, nanoid } from '@/lib/utils'
-// import { auth } from '@/auth'
 // import { clearChats } from '@/app/actions'
-import { Button, buttonVariants } from '@/components/ui/button'
 import { Sidebar } from '@/components/sidebar'
-import { SidebarList } from '@/components/sidebar-list'
-import {
-  IconGitHub,
-  IconNextChat,
-  IconSeparator,
-  IconVercel
-} from '@/components/ui/icons'
 import { SidebarFooter } from '@/components/sidebar-footer'
+import { SidebarList } from '@/components/sidebar-list'
 import { ThemeToggle } from '@/components/theme-toggle'
-import { ClearHistory } from '@/components/clear-history'
+import { Button } from '@/components/ui/button'
+import {
+  IconNextChat,
+  IconSeparator
+} from '@/components/ui/icons'
 import { UserMenu } from '@/components/user-menu'
-import { LoginButton } from '@/components/login-button'
-import { User } from './UserModel'
-import { redirect } from 'next/navigation'
-import UserContext from './ui/UserProvider'
 
 
 
 export function Header() {
-  // const session = await auth()
-  const session = React.useContext(UserContext)?.session;
+  const session = {
+    user: {
+      id: "vishals9711",
+    }
+  }
 
 
-  
 
   return (
     <header className="sticky top-0 z-50 flex items-center justify-between w-full h-16 px-4 border-b shrink-0 bg-gradient-to-b from-background/10 via-background/50 to-background/80 backdrop-blur-xl">
@@ -62,26 +54,6 @@ export function Header() {
             </Button>
           )}
         </div>
-      </div>
-      <div className="flex items-center justify-end space-x-2">
-        <a
-          target="_blank"
-          href="https://github.com/vercel/nextjs-ai-chatbot/"
-          rel="noopener noreferrer"
-          className={cn(buttonVariants({ variant: 'outline' }))}
-        >
-          <IconGitHub />
-          <span className="hidden ml-2 md:flex">GitHub</span>
-        </a>
-        <a
-          href="https://github.com/vercel/nextjs-ai-chatbot/"
-          target="_blank"
-          className={cn(buttonVariants())}
-        >
-          <IconVercel className="mr-2" />
-          <span className="hidden sm:block">Deploy to Vercel</span>
-          <span className="sm:hidden">Deploy</span>
-        </a>
       </div>
     </header>
   )
